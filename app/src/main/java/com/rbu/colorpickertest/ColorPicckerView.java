@@ -37,6 +37,7 @@ public class ColorPicckerView extends View {
     private int mWidth;//view宽
     private float r;//色环半径
     private boolean downInCircle = true;//按在渐变环上
+    private Context mContext;
 
 
     public ColorPicckerView(Context context) {
@@ -55,6 +56,7 @@ public class ColorPicckerView extends View {
     }
 
     private void init(Context context) {
+        mContext = context;
         mHeight = 500;
         mWidth = 500;
         setFocusable(true);
@@ -68,8 +70,9 @@ public class ColorPicckerView extends View {
         r = mWidth / 2 * 0.7f;
         //控制点的画笔
         mClickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mClickPaint.setStyle(Paint.Style.FILL);
-        mClickPaint.setColor(Color.parseColor("#C0C0C0"));
+        mClickPaint.setStrokeWidth(1.5f);
+        mClickPaint.setStyle(Paint.Style.STROKE);
+        mClickPaint.setColor(Color.parseColor("#000000"));
     }
 
     @Override
@@ -134,20 +137,6 @@ public class ColorPicckerView extends View {
         return interpCircleColor(mCircleColors,unit);
     }
 
-//    private void setSmallCircle (int r,int g,int b) {
-//        int color = Color.rgb(r,g,b);
-//
-//    }
-
-//    private float getUnit(int color,int colors[]) {
-//        if(colors[0] == color) {
-//            return 0;
-//        }
-//        if(colors[colors.length - 1] == color) {
-//            return 1;
-//        }
-//
-//    }
 
     /**
      * 获取圆环上的颜色
@@ -173,7 +162,8 @@ public class ColorPicckerView extends View {
         int g = ave(Color.green(c0),Color.green(c1),p);
         int b = ave(Color.blue(c0),Color.blue(c1),p);
 
-        return Color.rgb(r,g,b);
+        return Color.argb(a,r,g,b);
+
 
     }
 
@@ -191,6 +181,8 @@ public class ColorPicckerView extends View {
         }
     }
 
+
+
     public interface OnColorChangedListener {
         void onColorChanged(int color);
     }
@@ -203,52 +195,4 @@ public class ColorPicckerView extends View {
         this.mListener = mListener;
     }
 
-//    private float fromColor2Unit(int color) {
-//
-//        float degree = 0;
-//        int diff = 360 / (mCircleColors.length - 1);
-//
-//        int r = Color.red(color);
-//        int g = Color.green(color);
-//        int b = Color.blue(color);
-//
-//        int[] mColor = {b, g, r};
-//
-//        // 把最大的，置xFF，最小的，置0
-//        int min = findMin(b, g, r);
-//        int max = findMax(b, g, r);
-//
-//        int temp = (xff << (max * 8)) + (xff << (8 * 3));
-//
-//        if (max == min) {//证明RGB相等；
-//            return 90;// 九十度
-//        }
-//
-//        int mid = 3 - max - min;
-//        int start = 0;
-//        int end = 0;
-//        for (int i = 0; i < mCircleColors.length - 2; i++) {
-//            if (mCircleColors[i] - temp == 0)
-//                start = i;
-//            if (mCircleColors[i] - temp == (xff << (mid * 8)))
-//                end = i;
-//        }
-//        float percent = (float) mColor[mid] / (float) xff;
-//        int degreeDiff = (int) (percent * diff);
-//
-//        if (start < end) {
-//            degree = start * diff;
-//            degree += degreeDiff;
-//        } else {
-//            degree = start * diff;
-//            degree -= degreeDiff;
-//        }
-//
-//        degree += 90;
-//
-//        if (degree > 360)
-//            degree -= 360;
-//
-//        return degree;
-//    }
 }

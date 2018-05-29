@@ -88,18 +88,19 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onColorChanged(int color) {
 
-                            int red = (color & 0xff0000) >> 16;
-                            int green = (color & 0x00ff00) >> 8;
-                            int blue = (color & 0x0000ff);
-                            String rupStr=Integer.toHexString(red);
-                            String gupStr=Integer.toHexString(green);
-                            String bupStr=Integer.toHexString(blue);
+                            int a = (color >>> 24);
+                            int r = (color >>  16) & 0xFF;
+                            int g = (color >>   8) & 0xFF;
+                            int b = (color)        & 0xFF;
+                            String rupStr=Integer.toHexString(r);
+                            String gupStr=Integer.toHexString(g);
+                            String bupStr=Integer.toHexString(b);
                             String colorUpStr=rupStr+gupStr+bupStr;    //十六进制的颜色字符串。
                             btnColorPicker.setText(
                                     ""+colorUpStr + " "+
-                                    "R:" + red +" " +
-                                    "G:" + green + " " +
-                                    "B:" + blue);
+                                    "R:" + r +" " +
+                                    "G:" + g + " " +
+                                    "B:" + b);
                             btnColorPicker.setBackgroundColor(color);
                         }
                     });

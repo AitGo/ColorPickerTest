@@ -54,14 +54,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:visibility="invisible" />
 
     <com.rbu.colorpickertest.ColorPickerView2
         android:id="@+id/colorPickerDisk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_alignParentTop="true"
         android:layout_marginTop="150dp"
         android:visibility="invisible"
