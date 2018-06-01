@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
                             String rupStr=Integer.toHexString(r);
                             String gupStr=Integer.toHexString(g);
                             String bupStr=Integer.toHexString(b);
+                            rupStr = rupStr.equals("0") ? rupStr="00" : rupStr;
+                            gupStr = gupStr.equals("0") ? gupStr="00" : gupStr;
+                            bupStr = bupStr.equals("0") ? bupStr="00" : bupStr;
                             String colorUpStr=rupStr+gupStr+bupStr;    //十六进制的颜色字符串。
                             btnColorPicker.setText(
                                     ""+colorUpStr + " "+

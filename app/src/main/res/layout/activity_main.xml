@@ -37,7 +37,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnColorPicker"
-        android:textSize="20dp"
+
         android:text="对话框方式获取颜色" />
 
     <Button

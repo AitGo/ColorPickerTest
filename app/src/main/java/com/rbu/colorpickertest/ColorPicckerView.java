@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.icu.util.UniversalTimeScale;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -43,22 +44,25 @@ public class ColorPicckerView extends View {
     public ColorPicckerView(Context context) {
         super(context);
         init(context);
+        mContext = context;
     }
 
     public ColorPicckerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+        mContext = context;
     }
 
     public ColorPicckerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+        mContext = context;
     }
 
     private void init(Context context) {
         mContext = context;
-        mHeight = 500;
-        mWidth = 500;
+        mHeight = dp2px(context,200);
+        mWidth = dp2px(context,200);
         setFocusable(true);
         setFocusableInTouchMode(true);
         //准备色圆的画笔
@@ -67,10 +71,10 @@ public class ColorPicckerView extends View {
         mPaint.setShader(s);
         mPaint.setStyle(Paint.Style.FILL);//设置实心
 
-        r = mWidth / 2 * 0.7f;
+        r = mWidth / 2 * 1.0f;
         //控制点的画笔
         mClickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mClickPaint.setStrokeWidth(1.5f);
+        mClickPaint.setStrokeWidth(1.0f);
         mClickPaint.setStyle(Paint.Style.STROKE);
         mClickPaint.setColor(Color.parseColor("#000000"));
     }
@@ -79,14 +83,14 @@ public class ColorPicckerView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.translate(mWidth / 2,mHeight / 2);
         canvas.drawOval(new RectF(-r,-r,r,r),mPaint);
-        canvas.drawCircle(clickX,clickY,16,mClickPaint);
+        canvas.drawCircle(clickX,clickY,dp2px(mContext,5),mClickPaint);
         super.onDraw(canvas);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX() - mWidth/2;
-        float y = event.getY() - mHeight/2 + 50;
+        float y = event.getY() - mHeight/2 + 0;
         boolean inCircle = inColorCircle(x,y,r);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -193,6 +197,27 @@ public class ColorPicckerView extends View {
 
     public void setColorChangedListener(OnColorChangedListener mListener) {
         this.mListener = mListener;
+    }
+
+//    /**
+//     * dp ---> px
+//     */
+//    public static int dp2px(Context context, int dp) {
+//        // > 公式: 1px = 1dp * (dpi / 160)
+//
+//        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+//        int            dpi     = metrics.densityDpi;
+//
+//        return (int) (dp * (dpi / 160f) + 0.5f);
+//
+//    }
+
+    /**
+     * dp转换成px
+     */
+    private int dp2px(Context context,float dpValue){
+        float scale=context.getResources().getDisplayMetrics().density;
+        return (int)(dpValue*scale+0.5f);
     }
 
 }
